@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Product documentation
+    url: https://j.deeptoai.com/docs
+    about: Read J Agent product documentation
+  - name: User community
+    url: https://j.deeptoai.com/community
+    about: Join the J Agent user community
