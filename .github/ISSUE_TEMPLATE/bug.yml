@@ -1,0 +1,66 @@
+name: Report a problem
+description: Tell us about a reproducible J Agent problem or regression
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve J Agent. Do not include credentials, private paths, personal information, or raw application logs.
+  - type: input
+    id: version
+    attributes:
+      label: J Agent version
+      placeholder: e.g. 0.1.7
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Agent task
+        - Model call
+        - Plugin or MCP
+        - Terminal
+        - Workbench
+        - Desktop shell
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Operating system
+      placeholder: e.g. macOS 15.6, Apple silicon
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the problem and the visible result.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open ...
+        2. Click ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Optional screenshots are welcome after sensitive information has been removed. Do not upload raw logs.
