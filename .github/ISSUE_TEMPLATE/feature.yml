@@ -1,0 +1,33 @@
+name: Suggest a feature
+description: Propose a J Agent product improvement or new capability
+title: "[Feature] "
+labels:
+  - feature-request
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A strong request starts with the problem and desired outcome, not only a proposed control or screen.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem should this solve?
+      description: Describe the workflow, limitation, or unmet need.
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What outcome do you want?
+      description: Describe what success would look like.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Suggested approach
+      description: Optional. Share an interaction or implementation idea if you have one.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Current workaround or alternatives
