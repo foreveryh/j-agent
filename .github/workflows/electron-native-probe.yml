@@ -1,0 +1,62 @@
+name: Electron native platform probe
+
+on:
+  push:
+    branches: ['codex/electron-native-probe-*']
+    paths:
+      - '.github/workflows/electron-native-probe.yml'
+      - 'experiments/electron-native-probe/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: electron-native-probe-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    name: ${{ matrix.target }} native build and launch
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: mac-intel
+            runner: macos-15-intel
+            platform: darwin
+          - target: windows-x64
+            runner: windows-2022
+            platform: win32
+    defaults:
+      run:
+        working-directory: experiments/electron-native-probe
+    env:
+      CI: 'true'
+      PROBE_EXPECT_PLATFORM: ${{ matrix.platform }}
+      PROBE_EXPECT_ARCH: x64
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22.23.2'
+      - name: Install isolated dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Make native test installer or archive
+        run: npm run make
+      - name: Launch packaged Electron and verify native SQLite
+        run: npm run smoke
+      - name: Retain results and unsigned test packages
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: electron-native-probe-${{ matrix.target }}
+          path: |
+            experiments/electron-native-probe/results/**
+            experiments/electron-native-probe/out/make/**
+          if-no-files-found: warn
+          retention-days: 3
